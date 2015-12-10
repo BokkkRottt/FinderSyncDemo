@@ -114,8 +114,8 @@ typedef void (^URLActionBlock)(NSURL * obj, NSUInteger idx, BOOL *stop);
 {
     NSArray* items = [FIFinderSyncController defaultController].selectedItemURLs;
     if (items.count) {
-        [items enumerateObjectsUsingBlock:^(id obj, NSUInteger idx, BOOL * stop) {
-            if (![self pathIsInvisible]) {
+        [items enumerateObjectsUsingBlock:^(NSURL * obj, NSUInteger idx, BOOL * stop) {
+            if (![self fileUrlIsInvisible:obj]) {
                 action(obj, idx, stop);
             }
         }];
@@ -238,12 +238,18 @@ typedef void (^URLActionBlock)(NSURL * obj, NSUInteger idx, BOOL *stop);
 {
     BOOL bResult = NO;
     
+    bResult = [aPath hasPrefix:anotherPath];
+    
     return bResult;
 }
 
-- (BOOL)pathIsInvisible
+- (BOOL)fileUrlIsInvisible:(NSURL *)fileUrl
 {
     BOOL bResult = NO;
+    NSNumber * numIsHidden = nil;
+    
+    [fileUrl getResourceValue:&numIsHidden forKey:NSURLIsHiddenKey error:NULL];
+    bResult = numIsHidden.boolValue;
     
     return bResult;
 }
