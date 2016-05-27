@@ -25,7 +25,8 @@ typedef void (^URLActionBlock)(NSURL * obj, NSUInteger idx, BOOL *stop);
 - (instancetype)init {
     self = [super init];
 
-    self.myFolderURL = [NSURL fileURLWithPath:@"/Users/yang/Desktop/1.localized"];
+    
+    self.myFolderURL = [NSURL fileURLWithPath:@"/Users/yang/Desktop"];
     [FIFinderSyncController defaultController].directoryURLs = [NSSet setWithObject:self.myFolderURL];
 
     [[FIFinderSyncController defaultController] setBadgeImage:[NSImage imageNamed: NSImageNameColorPanel] label:@"Status One" forBadgeIdentifier:@"Color"];
